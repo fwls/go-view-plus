@@ -108,6 +108,7 @@ import { icon } from '@/plugins'
 import { goDialog, toString } from '@/utils'
 import { customizeHttp } from '@/api/http'
 import cloneDeep from 'lodash/cloneDeep'
+import { executeDataSource } from '@/api/path/dataSource.api'
 
 const { DocumentTextIcon } = icon.ionicons5
 const { FilterIcon, FilterEditIcon } = icon.carbon
@@ -127,7 +128,16 @@ const sourceData = ref<any>('')
 // 动态获取数据
 const fetchTargetData = async () => {
   try {
-    const res = await customizeHttp(toRaw(targetData.value.request), toRaw(chartEditStore.getRequestGlobalConfig))
+    let res: any = null
+    if (targetData.value.request.requestDataType == 3) {
+      const params = {
+        id: targetData.value.request.requestDataSourceId,
+        sql: targetData.value.request.requestSQLContent.sql
+      }
+      res = await executeDataSource(params)
+    } else {
+      res = await customizeHttp(toRaw(targetData.value.request), toRaw(chartEditStore.getRequestGlobalConfig))
+    }
     if (res) {
       sourceData.value = res
       return
@@ -200,11 +210,14 @@ watch(
 .func-keyword {
   color: #b478cf;
 }
+
 @include go('chart-data-monaco-editor') {
+
   &.n-card.n-modal,
   .n-card {
     @extend .go-background-filter;
   }
+
   .editor-data-show {
     @include fetch-bg-color('filter-color');
     width: 420px;
