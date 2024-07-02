@@ -1,0 +1,48 @@
+// 页面全局样式
+// 去除高德地图 logo
+.amap-logo {
+  display: none !important;
+  opacity: 0 !important;
+}
+.amap-copyright {
+  opacity: 0 !important;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.d-end {
+  justify-content: end;
+}
+
+.d-between {
+  justify-content: space-between;
+}
+
+.d-around {
+  justify-content: space-around;
+}
+
+.d-center {
+  display: flex;
+  justify-content: center;
+}
+
+.d-block {
+  display: block;
+}
+
+.mr-5 {
+  margin-right: 5px;
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
+
+[data-theme='dark'] {
+  body {
+    background-color: #18181c;
+  }
+}
